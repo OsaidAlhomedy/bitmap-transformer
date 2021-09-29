@@ -3,12 +3,72 @@
  */
 package bitmap.transformer;
 
+import java.util.Scanner;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the image path :");
+        String path = scanner.nextLine();
+        Bitmap newimage = new Bitmap(path);
+        boolean replay = true;
+
+        while (replay) {
+            System.out.println("=========================");
+            System.out.println("Choose an option :");
+            System.out.println(showMenu());
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1: {
+                    System.out.println(showMenu());
+                    break;
+                }
+                case 2: {
+                    System.out.println("You will find the image here => app/src/main/resources :");
+//                    newimage.invert("app/src/main/resources/");
+                    break;
+                }
+                case 3: {
+                    System.out.println("You will find the image here => app/src/main/resources :");
+//                    newimage.blackAndWhiter("app/src/main/resources/reversed");
+                    break;
+                }
+                case 4: {
+                    System.out.println("Do you want it to be 1 : ClockWise OR 2 : CounterClockWise ?");
+                    boolean validator = true;
+                    int angle = scanner.nextInt();
+                    while (validator) {
+                        validator = false;
+                        if (angle == 1) {
+                            angle = 90;
+                        } else if (angle == 2) {
+                            angle = -90;
+                        } else {
+                            System.out.println("Enter a correct choice!");
+                            angle = scanner.nextInt();
+                            validator = true;
+                        }
+                    }
+                    newimage.imageRotate("app/src/main/resources/reversed.bmp", angle);
+                    break;
+                }
+                case 5: {
+                    replay = false;
+                    scanner.close();
+                }
+            }
+        }
+
+
     }
+
+    public static String showMenu() {
+
+        return "1: Show your options.\n2: Invert the image\n3: apply black and white filter\n4: Rotate image clockwise\n5: Exit the program";
+
+    }
+
 }
