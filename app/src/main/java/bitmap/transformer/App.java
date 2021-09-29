@@ -3,12 +3,59 @@
  */
 package bitmap.transformer;
 
+import java.util.Scanner;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the image path :");
+        String path = scanner.nextLine();
+        Bitmap newimage = new Bitmap(path);
+        boolean replay = true;
+        System.out.println("=========================");
+        System.out.println("Choose an option :");
+        System.out.println(showMenu());
+
+
+        while (replay) {
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1: {
+                    System.out.println(showMenu());
+                    break;
+                }
+                case 2: {
+                    System.out.println("You will find the image here => app/src/main/resources :");
+//                    newimage.reverser("app/src/main/resources/");
+                    break;
+                }
+                case 3: {
+                    System.out.println("You will find the image here => app/src/main/resources :");
+//                    newimage.blackAndWhiter("app/src/main/resources/");
+                    break;
+                }
+                case 4: {
+                    System.out.println("You will find the image here => app/src/main/resources :");
+//                    newimage.imageRotate("app/src/main/resources/");
+                    break;
+                }
+                case 5: {
+                    replay = false;
+                    scanner.close();
+                }
+            }
+        }
+
+
     }
+
+    public static String showMenu() {
+
+        return "1: Show your options.\n2: reverse the image\n3: apply black and white filter\n4: Rotate image clockwise\n5: Exit the program";
+
+    }
+
 }
