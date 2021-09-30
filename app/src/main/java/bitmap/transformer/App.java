@@ -45,7 +45,7 @@ public class App {
                 }
                 case 3: {
                     System.out.println("You will find the image here => app/src/main/resources :");
-//                    newimage.blackAndWhiter("app/src/main/resources/reversed");
+                    newimage.blackAndWhite();
                     break;
                 }
                 case 4: {

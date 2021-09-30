@@ -14,7 +14,7 @@ public class Bitmap {
     private String output;
 
 
-    public Bitmap(String path,String output) {
+    public Bitmap(String path, String output) {
 
         try {
             this.image = ImageIO.read(new File(path));
@@ -32,6 +32,7 @@ public class Bitmap {
 
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
+
                 int pixel = image.getRGB(x, y);
                 Color pixelColor = new Color(pixel, false);
 
@@ -41,6 +42,7 @@ public class Bitmap {
 
                 int[] colorArr = new int[]{inverseRed, inverseGreen, inverseBlue};
                 String[] colorHex = new String[colorArr.length];
+
                 for (int i = 0; i < colorArr.length; i++) {
                     if (colorArr[i] < 16) {
                         colorHex[i] = "0" + Integer.toHexString(colorArr[i]);
@@ -49,6 +51,7 @@ public class Bitmap {
                     }
 
                 }
+
                 String hex = colorHex[0] + "" + colorHex[1] + "" + colorHex[2];
                 image.setRGB(x, y, Integer.parseInt(hex, 16));
             }
@@ -56,7 +59,7 @@ public class Bitmap {
         }
 
         try {
-            File reversedImage = new File(output+"/reversedImage.bmp");
+            File reversedImage = new File(output + "/invertedImage.bmp");
             ImageIO.write(image, "bmp", reversedImage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -71,7 +74,7 @@ public class Bitmap {
         try {
 
             BufferedImage SubImg = rotate(image, angle);
-            File outputfile = new File(output+"/invertedImage.bmp");
+            File outputfile = new File(output + "/rotatedImage.bmp");
             ImageIO.write(SubImg, "bmp", outputfile);
             System.out.println(
                     "Image rotated successfully: "
@@ -82,7 +85,47 @@ public class Bitmap {
 
     }
 
-    public static BufferedImage rotate(BufferedImage img, int angle) {
+
+    public void blackAndWhite() {
+
+
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+
+                int pixel = image.getRGB(x, y);
+                Color pixelColor = new Color(pixel, false);
+
+                int greayScaling = (pixelColor.getRed() + pixelColor.getGreen() + pixelColor.getBlue()) / 3;
+
+                int[] colorArr = new int[]{greayScaling, greayScaling, greayScaling};
+                String[] colorBnW = new String[colorArr.length];
+
+                for (int i = 0; i < colorArr.length; i++) {
+                    if (colorArr[i] < 16) {
+                        colorBnW[i] = "0" + Integer.toHexString(colorArr[i]);
+                    } else {
+                        colorBnW[i] = Integer.toHexString(colorArr[i]);
+                    }
+
+                }
+
+                String hex = colorBnW[0] + "" + colorBnW[1] + "" + colorBnW[2];
+                image.setRGB(x, y, Integer.parseInt(hex, 16));
+            }
+
+        }
+
+        try {
+            File reversedImage = new File(output + "/greyScaledImage.bmp");
+            ImageIO.write(image, "bmp", reversedImage);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+
+    private static BufferedImage rotate(BufferedImage img, int angle) {
 
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         Graphics2D g2 = newImage.createGraphics();
