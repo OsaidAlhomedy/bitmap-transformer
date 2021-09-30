@@ -26,36 +26,44 @@ public class Bitmap {
 
     }
 
-/*
 
+    public void invert(String output) {
 
-    public void invert(String output){
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                int pixel = image.getRGB(x, y);
+                Color pixelColor = new Color(pixel, false);
 
-        File newImage = new File(imagePath);
-        try{
+                int inverseRed = 255 - pixelColor.getRed();
+                int inverseGreen = 255 - pixelColor.getGreen();
+                int inverseBlue = 255 - pixelColor.getBlue();
 
-            BufferedImage image = ImageIO.read(newImage);
+                int[] colorArr = new int[]{inverseRed, inverseGreen, inverseBlue};
+                String[] colorHex = new String[colorArr.length];
+                for (int i = 0; i < colorArr.length; i++) {
+                    if (colorArr[i] < 16) {
+                        colorHex[i] = "0" + Integer.toHexString(colorArr[i]);
+                    } else {
+                        colorHex[i] = Integer.toHexString(colorArr[i]);
+                    }
 
-            for (int y = 0; y < image.getHeight(); y++) {
-                for (int x = 0; x < image.getWidth(); x++) {
-                    int pixel = image.getRGB(x, y);
-                    Color color = new Color(pixel, false);
                 }
-
+                String hex = colorHex[0] + "" + colorHex[1] + "" + colorHex[2];
+                image.setRGB(x, y, Integer.parseInt(hex, 16));
             }
 
-//            File reversedImage = new File(output);
-//            ImageIO.write(image,"reversedImage",reversedImage);
+        }
 
-
-        }catch (
-                IOException e) {
+        try {
+            File reversedImage = new File(output);
+            ImageIO.write(image, "bmp", reversedImage);
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
+
     }
 
- */
 
     private void looper() {
 

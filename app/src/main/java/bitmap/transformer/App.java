@@ -15,7 +15,6 @@ public class App {
         String path = scanner.nextLine();
         Bitmap newimage = new Bitmap(path);
         boolean replay = true;
-
         while (replay) {
             System.out.println("=========================");
             System.out.println("Choose an option :");
@@ -28,7 +27,7 @@ public class App {
                 }
                 case 2: {
                     System.out.println("You will find the image here => app/src/main/resources :");
-//                    newimage.invert("app/src/main/resources/");
+                    newimage.invert("app/src/main/resources/inverted.bmp");
                     break;
                 }
                 case 3: {
@@ -61,7 +60,6 @@ public class App {
                 }
             }
         }
-
 
     }
 
