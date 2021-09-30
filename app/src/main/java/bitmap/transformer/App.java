@@ -13,7 +13,20 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the image path :");
         String path = scanner.nextLine();
-        Bitmap newimage = new Bitmap(path);
+        System.out.println("Enter the output path :");
+        boolean verfier = true;
+        String output = null;
+        while(verfier){
+            verfier = false;
+            output = scanner.nextLine();
+            if(output.endsWith("/")){
+                System.out.println("please enter a valid output directory without ( / ) in the end");
+                verfier = true;
+            }
+        }
+
+        Bitmap newimage = new Bitmap(path,output);
+
         boolean replay = true;
         while (replay) {
             System.out.println("=========================");
@@ -27,7 +40,7 @@ public class App {
                 }
                 case 2: {
                     System.out.println("You will find the image here => app/src/main/resources :");
-                    newimage.invert("app/src/main/resources/inverted.bmp");
+                    newimage.invert();
                     break;
                 }
                 case 3: {
@@ -51,7 +64,7 @@ public class App {
                             validator = true;
                         }
                     }
-                    newimage.imageRotate("app/src/main/resources/reversed.bmp", angle);
+                    newimage.imageRotate(angle);
                     break;
                 }
                 case 5: {
@@ -65,7 +78,7 @@ public class App {
 
     public static String showMenu() {
 
-        return "1: Show your options.\n2: Invert the image\n3: apply black and white filter\n4: Rotate image clockwise\n5: Exit the program";
+        return "1: Show your options.\n2: Invert the image\n3: Apply black and white filter\n4: Rotate the image\n5: Exit the program";
 
     }
 

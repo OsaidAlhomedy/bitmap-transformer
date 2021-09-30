@@ -10,24 +10,25 @@ import java.util.ArrayList;
 
 public class Bitmap {
 
-    private ArrayList<Integer[]> colorList = new ArrayList<Integer[]>();
     private BufferedImage image;
+    private String output;
 
 
-    public Bitmap(String path) {
+    public Bitmap(String path,String output) {
 
         try {
             this.image = ImageIO.read(new File(path));
-            looper();
         } catch (
                 IOException e) {
             System.out.println(e.getMessage());
         }
 
+        this.output = output;
+
     }
 
 
-    public void invert(String output) {
+    public void invert() {
 
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
@@ -55,7 +56,7 @@ public class Bitmap {
         }
 
         try {
-            File reversedImage = new File(output);
+            File reversedImage = new File(output+"/reversedImage.bmp");
             ImageIO.write(image, "bmp", reversedImage);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -65,26 +66,12 @@ public class Bitmap {
     }
 
 
-    private void looper() {
-
-        for (int y = 0; y < image.getHeight(); y++) {
-
-            for (int x = 0; x < image.getWidth(); x++) {
-                int pixel = image.getRGB(x, y);
-                Color color = new Color(pixel, true);
-                Integer[] pixelColor = new Integer[]{color.getRed(), color.getGreen(), color.getBlue()};
-                colorList.add(pixelColor);
-            }
-        }
-    }
-
-
-    public void imageRotate(String output, int angle) {
+    public void imageRotate(int angle) {
 
         try {
 
             BufferedImage SubImg = rotate(image, angle);
-            File outputfile = new File(output);
+            File outputfile = new File(output+"/invertedImage.bmp");
             ImageIO.write(SubImg, "bmp", outputfile);
             System.out.println(
                     "Image rotated successfully: "
