@@ -7,26 +7,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class Bitmap {
 
     private BufferedImage image;
     private String output;
 
-
     public Bitmap(String path, String output) {
 
         try {
             this.image = ImageIO.read(new File(path));
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
         this.output = output;
 
     }
-
 
     public void invert() {
 
@@ -40,7 +36,7 @@ public class Bitmap {
                 int inverseGreen = 255 - pixelColor.getGreen();
                 int inverseBlue = 255 - pixelColor.getBlue();
 
-                int[] colorArr = new int[]{inverseRed, inverseGreen, inverseBlue};
+                int[] colorArr = new int[] { inverseRed, inverseGreen, inverseBlue };
                 String[] colorHex = new String[colorArr.length];
 
                 for (int i = 0; i < colorArr.length; i++) {
@@ -65,9 +61,7 @@ public class Bitmap {
             System.out.println(e.getMessage());
         }
 
-
     }
-
 
     public void imageRotate(int angle) {
 
@@ -76,18 +70,13 @@ public class Bitmap {
             BufferedImage SubImg = rotate(image, angle);
             File outputfile = new File(output + "/rotatedImage.bmp");
             ImageIO.write(SubImg, "bmp", outputfile);
-            System.out.println(
-                    "Image rotated successfully: "
-                            + outputfile.getPath());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
 
-
     public void blackAndWhite() {
-
 
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
@@ -97,7 +86,7 @@ public class Bitmap {
 
                 int greayScaling = (pixelColor.getRed() + pixelColor.getGreen() + pixelColor.getBlue()) / 3;
 
-                int[] colorArr = new int[]{greayScaling, greayScaling, greayScaling};
+                int[] colorArr = new int[] { greayScaling, greayScaling, greayScaling };
                 String[] colorBnW = new String[colorArr.length];
 
                 for (int i = 0; i < colorArr.length; i++) {
@@ -124,7 +113,6 @@ public class Bitmap {
 
     }
 
-
     private static BufferedImage rotate(BufferedImage img, int angle) {
 
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
@@ -132,7 +120,6 @@ public class Bitmap {
 
         g2.rotate(Math.toRadians(angle), img.getWidth() / 2, img.getHeight() / 2);
         g2.drawImage(img, null, 0, 0);
-
 
         return newImage;
     }
